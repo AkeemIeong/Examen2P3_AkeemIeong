@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <fstream>
 #include "Tarea.h"
 #include "Sprint.h"
 #include "Historias_de_Usuario.h"
@@ -15,6 +16,27 @@ vector<Historias_de_Usuario*>Historias_de_usuario;
 vector<Tarea*> Tareas;
 vector<Sprint*>Sprints;
 
+string leer() {
+    string info, otra;
+    ifstream archivo;
+    archivo.open("historias_usuario.txt.txt", ios::in);
+    if (archivo.fail()) {
+        cout << "No se puedo abrir el archivo";
+        exit(1);
+    }
+
+    while (!archivo.eof()) {
+        getline(archivo, info);
+        cout << info << endl;
+        otra += info;
+        break;
+    }
+
+    archivo.close();
+    return otra;
+}
+
+
 void menu() {
     int op,op2;
     do {
@@ -27,7 +49,11 @@ void menu() {
         cin >> op;
         switch (op) {
         case 1:
-
+            leer();
+            /*leer("proyecto.txt");
+            leer("tarea.txt");
+            leer("sprint.txt");
+            leer("historias_usuario.txt");*/
             break;
         case 2:
             break;
