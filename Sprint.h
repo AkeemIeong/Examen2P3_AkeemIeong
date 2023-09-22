@@ -9,5 +9,8 @@ private:
 	string Fecha_de_Finalizacion;
 	string Estado_del_sprint;
 	int ID_de_Proyecto_Relacionado;
+public:
+	~Sprint();
+	Sprint(int, string, string, string, string, int);
 };
 

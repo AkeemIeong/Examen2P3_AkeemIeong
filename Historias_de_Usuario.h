@@ -8,4 +8,7 @@ private:
 	int Prioridad;
 	int Tiempo_Estimado;
 	int ID_de_Sprint_Relacionado;
+public:
+	~Historias_de_Usuario();
+	Historias_de_Usuario(int, string,int, int, int);
 };

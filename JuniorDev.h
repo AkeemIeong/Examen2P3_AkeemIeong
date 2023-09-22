@@ -1,7 +1,8 @@
 #pragma once
 #include <vector>
 #include "Tarea.h"
-class JuniorDev{
+#include "Developer.h"
+class JuniorDev:public Developer{
 private:
 	vector <Tarea> TareasAsignadas;
 };

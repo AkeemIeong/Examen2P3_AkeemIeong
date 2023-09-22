@@ -11,5 +11,8 @@ private:
 	string Fecha_de_Finalizacion;
 	string Estado_del_proyecto;
 	vector<Developer> Equipo_de_Desarollo;
+public:
+	~Proyecto();
+	Proyecto(int, string, string, string, string, vector<Developer>);
 };
 

@@ -7,5 +7,8 @@ private:
 	string nombreCompleto;
 	int anosExperiencia;
 	string Puesto;
+public:
+	~Developer();
+	Developer(int,string,int,string);
 };
 
