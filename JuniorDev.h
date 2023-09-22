@@ -5,5 +5,8 @@
 class JuniorDev:public Developer{
 private:
 	vector <Tarea> TareasAsignadas;
+public:
+	~JuniorDev();
+	JuniorDev(int, string, int, string, vector<Tarea>);
 };
 
