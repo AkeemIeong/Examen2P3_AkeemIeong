@@ -10,5 +10,7 @@ private:
 public:
 	~Developer();
 	Developer(int,string,int,string);
+	string getPuesto();
+	string getnombreCompleto();
 };
 

@@ -7,3 +7,11 @@ Developer::Developer(int id,string nombreCompleto,int anosExperiencia,string Pue
 	this->anosExperiencia = anosExperiencia;
 	this->Puesto = Puesto;
 }
+
+string Developer::getPuesto() {
+	return Puesto;
+}
+
+string Developer::getnombreCompleto() {
+	return nombreCompleto;
+}

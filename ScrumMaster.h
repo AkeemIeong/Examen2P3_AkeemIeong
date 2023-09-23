@@ -5,10 +5,13 @@
 #include "Developer.h"
 class ScrumMaster: public Developer{
 private:
-	vector<Proyecto> Proyectos;
-	vector<Sprint> Sprints;
+	vector<Proyecto*> Proyectos;
+	vector<Sprint*> Sprints;
 public:
 	~ScrumMaster();
-	ScrumMaster(int, string, int, string, vector<Proyecto>, vector<Sprint>);
+	ScrumMaster(int, string, int, string);
+	ScrumMaster(int, string, int, string, vector<Proyecto*>, vector<Sprint*>);
+	vector<Proyecto*> getProyectos();
+	void addsprint(Sprint*);
 };
 

@@ -11,5 +11,9 @@ public:
 	~Tarea();
 	Tarea(int, string, string);
 	void setID_de_Usuari_Relacionada(int);
+	int getID_de_Tarea();
+	string getDescripcion_de_la_Tarea();
+	string getEstado_de_la_Tarea();
+	int getID_de_Usuari_Relacionada();
 };
 

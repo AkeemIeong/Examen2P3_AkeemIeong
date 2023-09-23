@@ -12,16 +12,83 @@
 #include "ScrumMaster.h"
 #include "JuniorDev.h"
 using namespace std;
+vector<Developer*>Developers;
 vector<Proyecto*>Proyectos;
 vector<Historias_de_Usuario*>Historias_de_usuario;
 vector<Tarea*> Tareas;
 vector<Sprint*>Sprints;
 
+//metodo para leer y agragar al vector para Developer
+void parseo_Developer(string cadena) {
+    string lectura;
+    stringstream input_stringstream(cadena);
+    while (getline(input_stringstream, lectura)) {
+        string ID, nombre_cum, anos_experiencia, puesto;
+        stringstream stream(lectura);
+        getline(stream, ID, ',');
+        getline(stream, nombre_cum, ',');
+        getline(stream, anos_experiencia, ',');
+        getline(stream, puesto, ',');
+        if(puesto=="ScrumMaster")
+            Developers.push_back(new ScrumMaster(stoi(ID), nombre_cum, stoi(anos_experiencia), puesto));
+        if(puesto=="SeniorDev")
+            Developers.push_back(new SeniorDev(stoi(ID), nombre_cum, stoi(anos_experiencia), puesto));
+        if(puesto=="JuniorDev")
+            Developers.push_back(new JuniorDev(stoi(ID), nombre_cum, stoi(anos_experiencia), puesto));
+    }
+}
+void leer_Developer() {
+    string info;
+    ifstream archivo;
+    archivo.open("sprint.txt.txt", ios::in);
+    if (archivo.fail()) {
+        cout << "No se puedo abrir el archivo";
+        exit(1);
+    }
+    while (!archivo.eof()) {
+        getline(archivo, info);
+        parseo_Developer(info);
+    }
+    archivo.close();
+}
+// fin de los metodos de Developer
+
+//metodo para leer y agragar al vector para proyecto
+void parseo_Proyecto(string cadena) {
+    string lectura;
+    stringstream input_stringstream(cadena);
+    while (getline(input_stringstream, lectura)) {
+        string Id_proyecto,nombre_proyecto,fecha_inicio,fecha_final,estado_proyecto;
+        stringstream stream(lectura);
+        getline(stream, Id_proyecto, ',');
+        getline(stream, nombre_proyecto, ',');
+        getline(stream, fecha_inicio, ',');
+        getline(stream, fecha_final, ',');
+        getline(stream, estado_proyecto, ',');
+        Proyectos.push_back(new Proyecto(stoi(Id_proyecto), nombre_proyecto, fecha_inicio, fecha_final, estado_proyecto));
+    }
+}
+void leer_Proyecto() {
+    string info;
+    ifstream archivo;
+    archivo.open("proyecto.txt.txt", ios::in);
+    if (archivo.fail()) {
+        cout << "No se puedo abrir el archivo";
+        exit(1);
+    }
+    while (!archivo.eof()) {
+        getline(archivo, info);
+        parseo_Proyecto(info);
+    }
+    archivo.close();
+}
+// fin de los metodos de proyecto
+
 //metodo para leer y agragar al vector para historia ususarios
 void parseo_Historia_usuarios(string cadena) {
-    string lectura;                                             
-    stringstream input_stringstream(cadena);                    
-    while (getline(input_stringstream, lectura)){
+    string lectura;
+    stringstream input_stringstream(cadena);
+    while (getline(input_stringstream, lectura)) {
         string Id_histotia, titulo, prioridad, tiempo;
         stringstream stream(lectura);
         getline(stream, Id_histotia, ',');
@@ -75,20 +142,20 @@ void leer_Tarea() {
     archivo.close();
 }
 // fin de los metodos de Tarea 
- 
+
 //metodo para leer y agragar al vector para sprint
 void parseo_Sprint(string cadena) {
     string lectura;
     stringstream input_stringstream(cadena);
     while (getline(input_stringstream, lectura)) {
-        string Id_sprint, nombre_sprint,fecha_inicio,fecha_final,estad_sprint;
+        string Id_sprint, nombre_sprint, fecha_inicio, fecha_final, estad_sprint;
         stringstream stream(lectura);
         getline(stream, Id_sprint, ',');
         getline(stream, nombre_sprint, ',');
         getline(stream, fecha_inicio, ',');
         getline(stream, fecha_final, ',');
         getline(stream, estad_sprint, ',');
-        Sprints.push_back(new Sprint(stoi(Id_sprint),nombre_sprint,fecha_inicio,fecha_final,estad_sprint));
+        Sprints.push_back(new Sprint(stoi(Id_sprint), nombre_sprint, fecha_inicio, fecha_final, estad_sprint));
     }
 }
 void leer_Sprint() {
@@ -107,36 +174,29 @@ void leer_Sprint() {
 }
 // fin de los metodos de sprint
 
-//metodo para leer y agragar al vector para proyecto
-void parseo_Proyecto(string cadena) {
-    string lectura;
-    stringstream input_stringstream(cadena);
-    while (getline(input_stringstream, lectura)) {
-        string Id_proyecto,nombre_proyecto,fecha_inicio,fecha_final,estado_proyecto;
-        stringstream stream(lectura);
-        getline(stream, Id_proyecto, ',');
-        getline(stream, nombre_proyecto, ',');
-        getline(stream, fecha_inicio, ',');
-        getline(stream, fecha_final, ',');
-        getline(stream, estado_proyecto, ',');
-        Sprints.push_back(new Sprint(stoi(Id_proyecto), nombre_proyecto, fecha_inicio, fecha_final, estado_proyecto));
-    }
-}
-void leer_Proyecto() {
-    string info;
-    ifstream archivo;
-    archivo.open("proyecto.txt.txt", ios::in);
+void escribir() {
+    ofstream archivo;
+    archivo.open("proyectos_modificados.txt.txt", ios::app);
     if (archivo.fail()) {
         cout << "No se puedo abrir el archivo";
         exit(1);
     }
-    while (!archivo.eof()) {
-        getline(archivo, info);
-        parseo_Proyecto(info);
+    for (size_t i = 0; i < Developers.size(); i++){
+        archivo<< Developers[i]->getnombreCompleto()<<endl;
     }
-    archivo.close();
+    for (size_t i = 0; i < Proyectos.size(); i++) {
+        archivo << Proyectos[i]->getNombre_del_Proyecto() << endl;
+    }
+    for (size_t i = 0; i < Tareas.size(); i++) {
+        archivo << Tareas[i]->getID_de_Tarea() << "," << Tareas[i]->getDescripcion_de_la_Tarea() <<"," << Tareas[i]->getEstado_de_la_Tarea() << "," << Tareas[i]->getID_de_Usuari_Relacionada();
+    }
+    for (size_t i = 0; i < Developers.size(); i++) {
+        archivo << Developers[i]->getnombreCompleto() << endl;
+    }
+    for (size_t i = 0; i < Developers.size(); i++) {
+        archivo << Developers[i]->getnombreCompleto() << endl;
+    }
 }
-// fin de los metodos de proyecto
 
 void menu() {
     int op,op2;
@@ -150,10 +210,14 @@ void menu() {
         cin >> op;
         switch (op) {
         case 1:
+            leer_Developer();
+            leer_Proyecto();
             leer_Historia_usuarios();
-            
+            leer_Tarea();
+            leer_Sprint();
             break;
         case 2:
+            escribir();
             break;
         case 3:
             do {
@@ -167,8 +231,44 @@ void menu() {
                 cin >> op2;
                 switch (op2) {
                 case 1:
+                    int ID_pro, ID_scrum_master;
+                    cout << "--- Asignar Proyecto a Scrum Master ---\n"
+                        "----- Lista de Proyectos -----\n";
+                    for (size_t i = 0; i < Proyectos.size(); i++){
+                        cout << "ID: " << i + 1 << " Nombre:" <<  Proyectos[i]->getNombre_del_Proyecto() << endl;
+                    }
+                    cout << "Por favor, ingrese el ID del proyecto que desea asignar: ";
+                    cin >> ID_pro;
+                    cout << "----- Lista de Scrum Master -----\n";
+                    for (size_t i = 0; i < Developers.size(); i++) {
+                        if (Developers[i]->getPuesto() == "ScrumMaster") {
+                            cout << "ID: " << i + 1 << " Nombre: " << Developers[i]->getnombreCompleto();
+                        }
+                    }
+                    cout << "Por favor, ingrese el ID del Scrum Master que desea asignar el proyecto: ";
+                    cin >> ID_scrum_master;
+                    Proyectos[ID_pro - 1]->getEquipo_de_Desarollo().push_back(Developers[ID_scrum_master-1]);
+                    cout << Proyectos[ID_pro]->getNombre_del_Proyecto() << " asignado al Scrum Master " << Developers[ID_scrum_master]->getnombreCompleto() << " exitosamente!";
                     break;
                 case 2:
+                    int ID_sprint, ID_proyecto;
+                    cout << "--- Asignar Sprint a un Proyecto ---\n"
+                        "----- Lista de Sprint -----\n";
+                    for (size_t i = 0; i < Sprints.size(); i++) {
+                        cout << "ID: " << i + 1 << " Nombre:" << Sprints[i]->getNombre_del_Sprint() << endl;
+                    }
+                    cout << "Por favor, ingrese el ID del Sprint que desea asignar: ";
+                    cin >> ID_sprint;
+                    cout << "----- Lista de Proyectos -----\n";
+                    for (size_t i = 0; i < Proyectos.size(); i++) {
+                        cout << "ID: " << i + 1 << " Nombre:" << Proyectos[i]->getNombre_del_Proyecto() << endl;
+                    }
+                    cout << "Por favor, ingrese el ID del proyecto que desea asignar asignar el Sprint: ";
+                    cin >> ID_proyecto;
+                    Sprints[ID_sprint - 1]->setID_de_Proyecto_Relacionado(ID_proyecto - 1);
+                    for (Developer* d : Proyectos.at(ID_proyecto-1)->getEquipo_de_Desarollo()) {
+                        ((ScrumMaster*)d)(sprints.at())
+                    }
                     break;
                 case 3:
                     break;
@@ -180,6 +280,7 @@ void menu() {
             break;
         }
     } while (op!=4);
+    
 }
 
 int main(){

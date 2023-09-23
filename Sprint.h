@@ -13,5 +13,6 @@ public:
 	~Sprint();
 	Sprint(int, string, string, string, string);
 	void setID_de_Proyecto_Relacionado(int);
+	string getNombre_del_Sprint();
 };
 

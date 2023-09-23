@@ -13,3 +13,6 @@ void Sprint::setID_de_Proyecto_Relacionado(int ID_de_Proyecto_Relacionado) {
 	this->ID_de_Proyecto_Relacionado = ID_de_Proyecto_Relacionado;
 }
 
+string Sprint::getNombre_del_Sprint() {
+	return Nombre_del_Sprint;
+}
