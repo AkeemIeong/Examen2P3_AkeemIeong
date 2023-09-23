@@ -13,6 +13,7 @@ private:
 	vector<Developer> Equipo_de_Desarollo;
 public:
 	~Proyecto();
-	Proyecto(int, string, string, string, string, vector<Developer>);
+	Proyecto(int, string, string, string, string);
+	void setEquipo_de_Desarollo(vector<Developer>);
 };
 

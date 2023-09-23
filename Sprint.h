@@ -11,6 +11,7 @@ private:
 	int ID_de_Proyecto_Relacionado;
 public:
 	~Sprint();
-	Sprint(int, string, string, string, string, int);
+	Sprint(int, string, string, string, string);
+	void setID_de_Proyecto_Relacionado(int);
 };
 

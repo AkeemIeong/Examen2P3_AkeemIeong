@@ -9,6 +9,7 @@ private:
 	int ID_de_Usuari_Relacionada;
 public:
 	~Tarea();
-	Tarea(int, string, string, int);
+	Tarea(int, string, string);
+	void setID_de_Usuari_Relacionada(int);
 };
 
